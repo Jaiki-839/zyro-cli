@@ -1,4 +1,4 @@
-# 🪶 Jaiki CLI — AI Developer Terminal
+# ⚡ Zyro CLI — AI Developer Terminal
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node: >=18.0.0](https://img.shields.io/badge/Node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
@@ -8,15 +8,15 @@
 A modern, fast, AI-powered developer terminal shell inspired by Gemini CLI, Warp, GitHub CLI, and classic UNIX terminals.
 
 ```text
-     ██╗ █████╗ ██╗██╗  ██╗██╗
-     ██║██╔══██╗██║██║ ██╔╝██║
-     ██║███████║██║█████╔╝ ██║
-██   ██║██╔══██║██║██╔═██╗ ██║
-╚█████╔╝██║  ██║██║██║  ██╗██║
- ╚════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝
+  ███████╗██╗   ██╗██████╗  ██████╗ 
+  ╚══███╔╝╚██╗ ██╔╝██╔══██╗██╔═══██╗
+    ███╔╝  ╚████╔╝ ██████╔╝██║   ██║
+   ███╔╝    ╚██╔╝  ██╔══██╗██║   ██║
+  ███████╗   ██║   ██║  ██║╚██████╔╝
+  ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ 
 
   ╔══════════════════════════════════════════════╗
-  ║                 JAIKI CLI                    ║
+  ║                 ZYRO CLI                     ║
   ║        AI Developer Terminal & Shell         ║
   ╚══════════════════════════════════════════════╝
 ```
@@ -25,6 +25,7 @@ A modern, fast, AI-powered developer terminal shell inspired by Gemini CLI, Warp
 
 ## ✨ Features
 
+- ⚡ **Instant Dual-Launch**: Launch as `zyro` or `jaiki` right out of the box, or register any custom launch name using `shortcut add <name>`.
 - 🤖 **Multi-Provider AI Intelligence**: Seamless Google Gemini & OpenAI integration (`ask`, `chat`, `explain`, `fix`, `generate`).
 - 🎨 **Fully Customizable Aesthetics**: 8 built-in themes (`dark`, `light`, `matrix`, `cyberpunk`, `dracula`, `nord`, `tokyo-night`, `gruvbox`).
 - 🔤 **Customizable ASCII Art**: Easily customize your startup logo or load your own ASCII banner from any text file.
@@ -42,29 +43,38 @@ A modern, fast, AI-powered developer terminal shell inspired by Gemini CLI, Warp
 
 ### Option 1: Global Installation via NPM
 
-Install globally so you can access the CLI from any directory or terminal on your PC:
-
 ```bash
-npm install -g jaiki-cli
+npm install -g zyro-cli
 ```
 
 Then run:
 ```bash
+zyro
+# or
 jaiki
 ```
 
-### Option 2: Run Instantly via NPX (No Install)
+### Option 2: Set Your Own Custom Launch Command!
+
+Want to launch Zyro with your own custom name (like `term`, `mycli`, `boss`)?
+Inside Zyro, simply run:
+```bash
+shortcut add term
+```
+Now, simply typing `term` anywhere in your terminal launches your CLI!
+
+### Option 3: Run Instantly via NPX (No Install)
 
 ```bash
-npx jaiki-cli
+npx zyro-cli
 ```
 
-### Option 3: From Source (Developers / Contributors)
+### Option 4: From Source (Developers / Contributors)
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/jaiki-cli.git
-cd jaiki-cli
+git clone https://github.com/your-username/zyro-cli.git
+cd zyro-cli
 
 # 2. Install dependencies
 npm install
