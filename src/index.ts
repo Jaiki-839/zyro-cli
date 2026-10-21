@@ -9,7 +9,7 @@ import { commandRegistry } from './terminal/commandRegistry';
 import { pluginManager } from './plugins/pluginManager';
 import { Repl } from './terminal/repl';
 import { playStartupAnimation } from './ui/Startup';
-import { renderWelcomeBox, renderSystemInfoBlock, renderHelpHint } from './ui/banner';
+import { renderSystemInfoBlock, renderHelpHint } from './ui/banner';
 import { CLI_VERSION } from './utils/version';
 import { logger } from './utils/logger';
 import { parseCommandLine } from './terminal/parser';
@@ -29,7 +29,6 @@ async function showBanner(forceSuppress = false): Promise<void> {
   if (config.preferences.showAnimation !== false) {
     await playStartupAnimation(config.asciiArt);
   }
-  console.log(renderWelcomeBox());
   console.log(await renderSystemInfoBlock(config.username, config.hostname));
   console.log(renderHelpHint());
 }

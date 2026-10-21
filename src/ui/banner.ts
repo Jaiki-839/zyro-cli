@@ -32,17 +32,7 @@ export function renderLogo(customAscii?: string): string {
 }
 
 export function renderWelcomeBox(): string {
-  const theme = getActiveTheme();
-  const title = chalk.hex(theme.accent).bold('⚡ ZYRO CLI');
-  const subtitle = chalk.hex(theme.secondary)('AI Developer Terminal & Shell');
-
-  return boxen(`${title}\n${subtitle}`, {
-    padding: 1,
-    margin: { top: 0, bottom: 1, left: 2, right: 2 },
-    borderStyle: 'double',
-    borderColor: theme.primary,
-    textAlignment: 'center',
-  });
+  return '';
 }
 
 async function getGitVersion(): Promise<string> {

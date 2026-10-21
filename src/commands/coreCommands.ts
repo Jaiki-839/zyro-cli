@@ -8,7 +8,7 @@ import { logger } from '../utils/logger';
 import { commandRegistry } from '../terminal/commandRegistry';
 import { getActiveTheme } from '../config/themes';
 import { CLI_VERSION } from '../utils/version';
-import { renderLogo, renderWelcomeBox } from '../ui/banner';
+import { renderLogo } from '../ui/banner';
 
 const CATEGORY_LABELS: Record<CommandCategory, string> = {
   core: 'Core',
@@ -134,11 +134,10 @@ const historyCommand: CommandDefinition = {
 
 const bannerCommand: CommandDefinition = {
   name: 'banner',
-  description: 'Re-display the Jaiki CLI welcome banner',
+  description: 'Re-display the ASCII banner',
   category: 'appearance',
   handler: (ctx) => {
     console.log(renderLogo(ctx.config.asciiArt));
-    console.log(renderWelcomeBox());
   },
 };
 
