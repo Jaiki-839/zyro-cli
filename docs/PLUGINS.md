@@ -1,6 +1,6 @@
 # Plugin Authoring Guide
 
-The CLI features an extensible plugin system allowing anyone to build and distribute custom commands.
+Zyro CLI features an extensible plugin system allowing anyone to build and distribute custom commands.
 
 ---
 
@@ -73,15 +73,15 @@ module.exports = {
 
 To install your plugin:
 ```bash
-jaiki plugin install ./weather-plugin.js
+zyro plugin install ./weather-plugin.js
 ```
 
 List installed plugins:
 ```bash
-jaiki plugin list
+zyro plugin list
 ```
 
 Run your new command:
 ```bash
-jaiki weather Tokyo
+zyro weather Tokyo
 ```

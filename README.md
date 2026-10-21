@@ -1,4 +1,4 @@
-# ⚡ Zyro CLI — AI Developer Terminal
+# ⚡ Zyro CLI — AI Developer Terminal & Shell
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node: >=18.0.0](https://img.shields.io/badge/Node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
@@ -14,34 +14,32 @@ A modern, fast, AI-powered developer terminal shell inspired by Gemini CLI, Warp
    ███╔╝    ╚██╔╝  ██╔══██╗██║   ██║
   ███████╗   ██║   ██║  ██║╚██████╔╝
   ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ 
-
-  ╔══════════════════════════════════════════════╗
-  ║                 ZYRO CLI                     ║
-  ║        AI Developer Terminal & Shell         ║
-  ╚══════════════════════════════════════════════╝
 ```
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- ⚡ **Instant Dual-Launch**: Launch as `zyro` or `jaiki` right out of the box, or register any custom launch name using `shortcut add <name>`.
+- ⚡ **Instant Dual-Launch**: Launch via `zyro` or `jaiki` right out of the box.
+- 🔤 **Dynamic Text-to-ASCII Generator**: Turn any text into your startup logo in seconds with `ascii <text>` (e.g., `ascii jaiki`).
+- 🚀 **Custom Launch Shortcut**: Anyone can define their own command name using `shortcut add <name>` (e.g. `shortcut add term`).
 - 🤖 **Multi-Provider AI Intelligence**: Seamless Google Gemini & OpenAI integration (`ask`, `chat`, `explain`, `fix`, `generate`).
-- 🎨 **Fully Customizable Aesthetics**: 8 built-in themes (`dark`, `light`, `matrix`, `cyberpunk`, `dracula`, `nord`, `tokyo-night`, `gruvbox`).
-- 🔤 **Customizable ASCII Art**: Easily customize your startup logo or load your own ASCII banner from any text file.
-- ⚡ **Minimal Mode Support**: Easily toggle or completely remove the welcome banner with `--no-banner` or `config set banner false`.
+- 🎨 **Minimalist Aesthetic**: Clean ASCII wordmark without clunky boxed borders, plus 8 built-in themes (`dark`, `light`, `matrix`, `cyberpunk`, `dracula`, `nord`, `tokyo-night`, `gruvbox`).
+- ⚡ **Minimal Mode Support**: Easily toggle or remove the welcome banner with `--no-banner` or `config set banner false`.
+- 🔄 **Safe In-Process Restart**: Instant `restart` command that refreshes environment and config without crashing terminal sessions.
 - 🧩 **Dynamic Plugin Architecture**: Install, enable, disable, and author modular plugins at runtime.
-- 🖥️ **Hardware & System Introspection**: Cross-platform system diagnostics (`sysinfo`, `cpu`, `mem`, `disk`, `uptime`, `processes`).
+- 🖥️ **Hardware & System Introspection**: Cross-platform diagnostics (`sysinfo`, `cpu`, `mem`, `disk`, `uptime`, `processes`).
 - 🗂️ **Cross-Platform Filesystem**: Unified Linux/macOS/Windows file operations (`ls`, `cd`, `cat`, `tree`, `find`, `mkdir`, `rm`, `cp`, `mv`).
 - 🌐 **Network Diagnostics**: Built-in network tools (`ping`, `ip`, `dns`, `http`).
-- 🛠️ **Developer Toolbelt**: Base64 encoding/decoding, crypto hashing (`MD5`, `SHA-256`), JSON inspector, and Git integration.
-- ⌨️ **Native Terminal Experience**: Command history, tab-autocomplete, custom aliases, and zero-flicker readline editing.
+- 🛠️ **Developer Toolbelt**: Base64 encoding/decoding, crypto hashing (`MD5`, `SHA-256`), JSON inspector, and Git helper.
 
 ---
 
-## 🚀 Quick Start & Installation
+## 🚀 Installation & Setup
 
-### Option 1: Global Installation via NPM
+### 1. Global Installation via NPM
+
+Install globally to access the CLI from any directory or terminal on your machine:
 
 ```bash
 npm install -g zyro-cli
@@ -54,133 +52,123 @@ zyro
 jaiki
 ```
 
-### Option 2: Set Your Own Custom Launch Command!
+### 2. Set Your Own Custom Launch Command!
 
-Want to launch Zyro with your own custom name (like `term`, `mycli`, `boss`)?
+Want to launch Zyro using your own keyword (like `term`, `mycli`, `boss`)?
 Inside Zyro, simply run:
 ```bash
 shortcut add term
 ```
-Now, simply typing `term` anywhere in your terminal launches your CLI!
+Now, typing `term` anywhere in your terminal launches the CLI!
 
-### Option 3: Run Instantly via NPX (No Install)
+### 3. Run Instantly via NPX (Zero Install)
 
 ```bash
 npx zyro-cli
 ```
 
-### Option 4: From Source (Developers / Contributors)
+### 4. From Source (Development / Contributing)
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/zyro-cli.git
+git clone https://github.com/Jaiki-839/zyro-cli.git
 cd zyro-cli
-
-# 2. Install dependencies
 npm install
-
-# 3. Build the TypeScript source
 npm run build
-
-# 4. Link globally to your local machine
-npm link
+npm link --force
 ```
 
 ---
 
-## 🔑 AI Provider Configuration
+## 🔤 Change Banner ASCII via Text Command
 
-No need to touch `.env` files across different folders! Set your API keys once through the CLI, and they are saved securely in your global configuration (`~/.jaiki/config.json`):
+You do not need to paste raw ASCII characters. Simply pass any text to `ascii`:
 
-### Using Google Gemini (Default)
-Get a free key at [Google AI Studio](https://aistudio.google.com/app/apikey):
 ```bash
-jaiki config set gemini-key YOUR_GEMINI_API_KEY
-```
+# Generate from any text directly:
+ascii jaiki
 
-### Using OpenAI
-Get an API key at [OpenAI Platform](https://platform.openai.com/api-keys):
-```bash
-jaiki config set openai-key YOUR_OPENAI_API_KEY
-jaiki config provider openai
-```
+# Or using explicit text subcommand:
+ascii text "MY TERMINAL"
 
-*(You can also set `GEMINI_API_KEY` or `OPENAI_API_KEY` as standard system environment variables).*
+# Preview current banner:
+ascii view
+
+# Load ASCII art from a file:
+ascii file ./banner.txt
+
+# Reset back to default ZYRO logo:
+ascii reset
+```
 
 ---
 
-## 🎨 Removing Banner & Customizing ASCII Art
+## 🎨 Hiding or Removing the Banner
 
-### Remove or Hide the Startup Banner
-Prefer a quiet, clean prompt?
+If you prefer a clean, minimal prompt without startup information:
+
 - **Permanently turn off banner**:
   ```bash
   config set banner false
   ```
 - **One-time quiet mode**:
   ```bash
-  jaiki --no-banner
+  zyro --no-banner
   # or
-  jaiki -q
+  zyro -q
   ```
 - **Turn off boot animation only**:
   ```bash
   config set animation false
   ```
 
-### Change or Customize the ASCII Logo
-Anyone can replace the startup logo with their own custom ASCII art:
-- **Set custom ASCII text**:
-  ```bash
-  ascii set "TERMINAL"
-  ```
-- **Load ASCII art from a file**:
-  ```bash
-  ascii file ./path/to/my-ascii-art.txt
-  ```
-- **Preview active ASCII banner**:
-  ```bash
-  ascii view
-  ```
-- **Reset back to default**:
-  ```bash
-  ascii reset
-  ```
+---
+
+## 🔑 AI Provider Configuration
+
+No need to touch `.env` files in different project folders! Set your API keys once through the CLI, and they are saved securely in your global configuration (`~/.jaiki/config.json`):
+
+### Google Gemini (Default)
+Get a free key at [Google AI Studio](https://aistudio.google.com/app/apikey):
+```bash
+zyro config set gemini-key YOUR_GEMINI_API_KEY
+```
+
+### OpenAI
+Get an API key at [OpenAI Platform](https://platform.openai.com/api-keys):
+```bash
+zyro config set openai-key YOUR_OPENAI_API_KEY
+zyro config provider openai
+```
 
 ---
 
-## 📖 Command Cheat Sheet
+## 📖 Command Reference
 
 | Category | Commands |
 |---|---|
-| **Core** | `help`, `clear`, `exit`, `version`, `whoami`, `history`, `about`, `terminal`, `restart`, `reload` |
+| **Core** | `help`, `clear`, `exit`, `version`, `whoami`, `history`, `about`, `terminal`, `restart`, `reload`, `shortcut` |
+| **Appearance** | `ascii [word\|text\|reset\|view]`, `theme [list\|<name>]`, `banner`, `logo` |
 | **AI** | `ask <query>`, `chat`, `explain <code/topic>`, `fix <code>`, `generate <prompt>` |
-| **Appearance** | `theme [list\|<name>]`, `banner`, `logo`, `ascii [view\|set\|file\|reset]` |
 | **Config** | `config [get]`, `config set <key> <val>`, `config provider <gemini\|openai>`, `config alias` |
 | **Filesystem** | `ls`, `cd`, `pwd`, `cat`, `touch`, `mkdir`, `rm`, `cp`, `mv`, `find`, `tree` |
-| **System** | `sysinfo`, `cpu`, `mem`, `disk`, `uptime`, `env`, `processes` |
-| **Network** | `ping`, `ip`, `dns`, `http` |
-| **Dev Tools** | `git`, `project`, `json`, `hash`, `encode` |
+| **System** | `sysinfo`, `cpu`, `mem`, `disk`, `uptime`, `env`, `processes`, `doctor` |
+| **Network** | `ping`, `ip`, `dns`, `http`, `wifi` |
+| **Dev Tools** | `git`, `project`, `json`, `hash`, `encode`, `open` |
 | **Plugins** | `plugin list`, `plugin install <path>`, `plugin enable`, `plugin disable`, `plugin remove` |
 
-For full command documentation and arguments, see [docs/COMMANDS.md](docs/COMMANDS.md).
+For full command details, flags, and options, see [docs/COMMANDS.md](docs/COMMANDS.md).
 
 ---
 
-## 📚 Documentation
+## 📚 Documentation Index
 
+- [Changelog](CHANGELOG.md)
 - [Architecture & Design](docs/ARCHITECTURE.md)
 - [Complete Command Reference](docs/COMMANDS.md)
 - [Customization & Theming](docs/CUSTOMIZATION.md)
 - [Plugin Authoring Guide](docs/PLUGINS.md)
 - [Contributing Guidelines](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
-
----
-
-## 🤝 Contributing
-
-Contributions, bug reports, and feature suggestions are very welcome! Please read the [Contributing Guide](CONTRIBUTING.md) to get started.
 
 ---
 

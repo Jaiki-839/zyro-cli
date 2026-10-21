@@ -1,6 +1,6 @@
 # Command Reference Catalog
 
-Every built-in command available in the CLI, organized by functional category.
+Every built-in command available in **Zyro CLI**, organized by functional category.
 
 ---
 
@@ -16,8 +16,27 @@ Every built-in command available in the CLI, organized by functional category.
 | `history` | - | View recent command history | `history [count]` |
 | `about` | - | Display CLI info, authors, and background | `about` |
 | `terminal` | - | Inspect current session details (shell, PID, CWD, theme) | `terminal` |
-| `restart` | - | Restart the CLI in the current directory | `restart` |
+| `restart` | - | Safely restart session, reload configs/plugins, and re-render header | `restart` |
 | `reload` | - | Reload configuration and plugins from disk | `reload` |
+| `shortcut` | - | Create or remove custom launch commands on your system | `shortcut [add <name> \| remove <name>]` |
+
+---
+
+## 🎨 Appearance & Banner Commands
+
+| Command | Aliases | Description | Usage |
+|---|---|---|---|
+| `ascii` | - | View, generate from text, or customize ASCII banner | `ascii [jaiki \| text <word> \| set <word> \| view \| reset \| file <filepath>]` |
+| `banner` | - | Re-display the active ASCII art banner | `banner` |
+| `logo` | - | Display active ASCII logo | `logo` |
+| `theme` | - | View available color themes or switch active theme | `theme [list \| <themename>]` |
+
+### ASCII Command Examples:
+- `ascii jaiki`: Generates stylized ASCII art for "jaiki" and sets it as banner.
+- `ascii text "Nova"`: Generates ASCII art for "Nova".
+- `ascii reset`: Restores default ZYRO logo.
+- `ascii view`: Previews currently active ASCII banner.
+- `ascii file ./art.txt`: Loads custom ASCII art from file.
 
 ---
 
@@ -33,17 +52,6 @@ Every built-in command available in the CLI, organized by functional category.
 
 ---
 
-## 🎨 Appearance & Banner Commands
-
-| Command | Aliases | Description | Usage |
-|---|---|---|---|
-| `banner` | - | Re-display the welcome banner and system info block | `banner` |
-| `logo` | - | Display the active ASCII art logo | `logo` |
-| `ascii` | - | View, set, load from file, or reset custom ASCII art | `ascii [view \| set <text> \| file <path> \| reset]` |
-| `theme` | - | View available color themes or switch active theme | `theme [list \| <themename>]` |
-
----
-
 ## ⚙️ Configuration Commands
 
 | Command | Aliases | Description | Usage |
@@ -55,15 +63,14 @@ Every built-in command available in the CLI, organized by functional category.
 | `config reset` | - | Reload configuration from disk | `config reset` |
 
 ### Supported `config set` Keys:
+- `gemini-key <KEY>`: Save Google Gemini API key to global config
+- `openai-key <KEY>`: Save OpenAI API key to global config
 - `banner <true|false>`: Enable or disable startup banner
 - `animation <true|false>`: Enable or disable startup boot animation
-- `gemini-key <API_KEY>`: Save Google Gemini API key
-- `openai-key <API_KEY>`: Save OpenAI API key
-- `ascii <text>`: Set custom ASCII text
+- `ascii <word>`: Generate and save custom ASCII banner
 - `ascii-file <path>`: Load ASCII art from a text file
 - `username <name>`: Override displayed username
 - `hostname <host>`: Override displayed hostname
-- `timestampInPrompt <true|false>`: Display timestamp in prompt
 
 ---
 
@@ -91,11 +98,12 @@ Every built-in command available in the CLI, organized by functional category.
 |---|---|---|---|
 | `sysinfo` | `neofetch` | Display hardware, OS, kernel, uptime & memory summary | `sysinfo` |
 | `cpu` | - | Inspect CPU model, core count, and architecture | `cpu` |
-| `mem` | `memory` | Inspect RAM usage, free memory, and total memory | `mem` |
+| `mem` | `ram` | Inspect RAM usage, free memory, and total memory | `mem` |
 | `disk` | - | Inspect disk storage | `disk` |
 | `env` | - | List environment variables or lookup a specific variable | `env [name]` |
 | `uptime` | - | Show system uptime | `uptime` |
 | `processes`| `ps` | List running processes | `processes` |
+| `doctor` | - | Diagnose environment and tool dependencies | `doctor` |
 
 ---
 
@@ -107,6 +115,7 @@ Every built-in command available in the CLI, organized by functional category.
 | `ip` | `myip` | Display local and public IP addresses | `ip` |
 | `http` | `curl` | Make quick HTTP GET/POST requests | `http [get\|post] <url>` |
 | `dns` | `nslookup`| Resolve host domain names to IP addresses | `dns <domain>` |
+| `wifi` | - | Show Wi-Fi connection and status | `wifi` |
 
 ---
 
@@ -115,7 +124,8 @@ Every built-in command available in the CLI, organized by functional category.
 | Command | Aliases | Description | Usage |
 |---|---|---|---|
 | `git` | - | Git status shortcut and repository helper | `git [status\|log]` |
-| `project` | - | Inspect current project (detects package.json, Cargo.toml, Go, etc.) | `project` |
+| `open` | - | Open app, file, directory or URL cross-platform | `open <target>` |
+| `project` | - | Inspect current project (detects package.json, Cargo, Go) | `project` |
 | `json` | - | Format, inspect, and query JSON files | `json <file>` |
 | `hash` | - | Compute MD5, SHA-256, or SHA-512 hashes | `hash <algorithm> <string\|file>` |
 | `encode` | `base64`| Base64 encode or decode text | `encode [encode\|decode] <text>` |
