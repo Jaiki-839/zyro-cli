@@ -1,10 +1,26 @@
-import boxen from 'boxen';
 import chalk from 'chalk';
 import gradient from 'gradient-string';
 import execa from 'execa';
+import figlet from 'figlet';
 import { getActiveTheme } from '../config/themes';
 import { getOSDescription } from '../utils/platform';
 import { CLI_VERSION } from '../utils/version';
+
+/**
+ * Generates ASCII-art wordmark from any plain text string using Figlet.
+ */
+export function generateAsciiFromText(text: string, font: string = 'Standard'): string {
+  try {
+    const result = figlet.textSync(text, {
+      font: (font as any) || 'Standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+    });
+    return result || text;
+  } catch {
+    return text;
+  }
+}
 
 /** Large ASCII-art wordmark shown at startup. */
 export const DEFAULT_LOGO = String.raw`

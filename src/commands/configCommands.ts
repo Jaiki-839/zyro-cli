@@ -4,7 +4,7 @@ import { CommandDefinition, ThemeName, AIProviderName } from '../types';
 import { logger } from '../utils/logger';
 import { configManager } from '../config/config';
 import { getActiveTheme, listThemeNames } from '../config/themes';
-import { renderLogo, DEFAULT_LOGO } from '../ui/banner';
+import { renderLogo, DEFAULT_LOGO, generateAsciiFromText } from '../ui/banner';
 
 const configCommand: CommandDefinition = {
   name: 'config',
@@ -83,10 +83,12 @@ const configCommand: CommandDefinition = {
         return;
       }
       if (key === 'ascii' && value) {
-        // Support newline escapes like \n
-        const unescaped = value.replace(/\\n/g, '\n');
-        await configManager.setAsciiArt(unescaped);
-        logger.success('Custom ASCII text art updated successfully.');
+        // If single line word, generate ASCII art; if multi-line, save raw
+        const art = value.includes('\n') || value.includes('\\n')
+          ? value.replace(/\\n/g, '\n')
+          : generateAsciiFromText(value);
+        await configManager.setAsciiArt(art);
+        logger.success(`Custom ASCII banner updated for "${value}".`);
         return;
       }
       if (key === 'ascii-file' && value) {
@@ -132,8 +134,8 @@ const configCommand: CommandDefinition = {
 
 const asciiCommand: CommandDefinition = {
   name: 'ascii',
-  description: 'View or customize the terminal ASCII art logo',
-  usage: 'ascii [view|set <text>|file <filepath>|reset]',
+  description: 'View, generate from text, or customize the ASCII art banner (e.g. ascii jaiki)',
+  usage: 'ascii [jaiki | text <word> | set <word> | view | reset | file <filepath>]',
   category: 'appearance',
   handler: async (ctx) => {
     const [sub, ...rest] = ctx.args;
@@ -145,23 +147,23 @@ const asciiCommand: CommandDefinition = {
       if (ctx.config.asciiArt) {
         logger.muted('Status: Using custom ASCII art.');
       } else {
-        logger.muted('Status: Using default ASCII logo.');
+        logger.muted('Status: Using default ZYRO ASCII logo.');
       }
-      logger.muted('Tip: run "ascii set <text>" or "ascii file <path>" to change it, or "ascii reset" to restore default.');
+      logger.muted('Tip: run "ascii <word>" or "ascii text <word>" to change banner, or "ascii reset" to restore default.');
       return;
     }
 
-    if (sub === 'set') {
-      const art = rest.join(' ');
-      if (!art) {
-        logger.error('Usage: ascii set <text>');
+    if (sub === 'text' || sub === 'set' || sub === 'generate') {
+      const inputWord = rest.join(' ').trim();
+      if (!inputWord) {
+        logger.error('Usage: ascii text <word/phrase>  (e.g. ascii text jaiki)');
         return;
       }
-      const unescaped = art.replace(/\\n/g, '\n');
-      await configManager.setAsciiArt(unescaped);
-      logger.success('Custom ASCII text updated successfully!');
+      const generated = generateAsciiFromText(inputWord);
+      await configManager.setAsciiArt(generated);
+      logger.success(`ASCII art generated for "${inputWord}" and saved as banner!`);
       logger.blank();
-      console.log(renderLogo(unescaped));
+      console.log(renderLogo(generated));
       return;
     }
 
@@ -186,17 +188,37 @@ const asciiCommand: CommandDefinition = {
       return;
     }
 
+    if (sub === 'raw') {
+      const art = rest.join(' ');
+      if (!art) {
+        logger.error('Usage: ascii raw <text>');
+        return;
+      }
+      const unescaped = art.replace(/\\n/g, '\n');
+      await configManager.setAsciiArt(unescaped);
+      logger.success('Custom raw ASCII art updated successfully!');
+      logger.blank();
+      console.log(renderLogo(unescaped));
+      return;
+    }
+
     if (sub === 'reset') {
       await configManager.setAsciiArt(undefined);
       ctx.config.asciiFile = undefined;
       await configManager.save();
-      logger.success('Reset ASCII logo to default.');
+      logger.success('Reset ASCII logo to default ZYRO wordmark.');
       logger.blank();
       console.log(renderLogo());
       return;
     }
 
-    logger.error('Usage: ascii [view|set <text>|file <filepath>|reset]');
+    // Direct word syntax: e.g. "ascii jaiki" or "ascii MyCLI"
+    const fullWord = ctx.args.join(' ').trim();
+    const generated = generateAsciiFromText(fullWord);
+    await configManager.setAsciiArt(generated);
+    logger.success(`ASCII art generated for "${fullWord}" and saved as banner!`);
+    logger.blank();
+    console.log(renderLogo(generated));
   },
 };
 
