@@ -55,7 +55,7 @@ const helpCommand: CommandDefinition = {
     }
 
     logger.blank();
-    console.log(chalk.hex(theme.primary).bold('Jaiki CLI — Available Commands'));
+    console.log(chalk.hex(theme.primary).bold('Zyro CLI — Available Commands'));
     logger.blank();
 
     for (const [category, commands] of grouped) {
@@ -152,13 +152,13 @@ const logoCommand: CommandDefinition = {
 
 const aboutCommand: CommandDefinition = {
   name: 'about',
-  description: 'Show information about Jaiki CLI',
+  description: 'Show information about Zyro CLI',
   category: 'core',
   handler: () => {
     const theme = getActiveTheme();
     logger.blank();
-    console.log(chalk.hex(theme.primary).bold('Jaiki CLI'));
-    logger.plain('A modern, AI-powered developer terminal.');
+    console.log(chalk.hex(theme.primary).bold('Zyro CLI'));
+    logger.plain('A modern, AI-powered developer terminal & shell.');
     logger.muted(`Version ${CLI_VERSION} · Built with Node.js, TypeScript & Ink`);
     logger.muted('Inspired by Gemini CLI, GitHub CLI, Warp, and classic Linux shells.');
     logger.blank();
@@ -171,7 +171,7 @@ const terminalCommand: CommandDefinition = {
   category: 'core',
   handler: (ctx) => {
     logger.table([
-      ['Shell', 'Jaiki CLI'],
+      ['Shell', 'Zyro CLI'],
       ['PID', String(process.pid)],
       ['CWD', ctx.cwd],
       ['Theme', ctx.config.theme],
@@ -182,13 +182,23 @@ const terminalCommand: CommandDefinition = {
 
 const restartCommand: CommandDefinition = {
   name: 'restart',
-  description: 'Restart the Jaiki CLI session',
+  description: 'Restart the Zyro CLI session and refresh environment',
   category: 'core',
-  handler: (ctx) => {
-    logger.info('Restarting Jaiki CLI...');
-    const [execPath, ...args] = process.argv;
-    spawn(execPath, args, { stdio: 'inherit', cwd: ctx.cwd });
-    ctx.exit(0);
+  handler: async (ctx) => {
+    logger.info('Restarting Zyro CLI session...');
+    console.clear();
+    const { configManager } = await import('../config/config');
+    const { pluginManager } = await import('../plugins/pluginManager');
+    await configManager.init();
+    await pluginManager.loadAll();
+    ctx.config = configManager.get();
+    const { renderLogo, renderSystemInfoBlock, renderHelpHint } = await import('../ui/banner');
+    if (ctx.config.banner) {
+      console.log(renderLogo(ctx.config.asciiArt));
+      console.log(await renderSystemInfoBlock(ctx.config.username, ctx.config.hostname));
+      console.log(renderHelpHint());
+    }
+    logger.success('Zyro CLI restarted fresh.');
   },
 };
 
