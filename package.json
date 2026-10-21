@@ -1,0 +1,69 @@
+{
+  "name": "jaiki-cli",
+  "version": "1.0.0",
+  "description": "Jaiki CLI — A modern, AI-powered developer terminal inspired by Gemini CLI, GitHub CLI and Warp.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "jaiki": "dist/index.js"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "terminal",
+    "ai",
+    "developer-tools",
+    "gemini",
+    "openai",
+    "productivity"
+  ],
+  "author": "Jaiki",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    ".env.example"
+  ],
+  "dependencies": {
+    "axios": "^1.7.9",
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "execa": "^5.1.1",
+    "fs-extra": "^11.2.0",
+    "gradient-string": "^2.0.2",
+    "ink": "^3.2.0",
+    "inquirer": "^8.2.6",
+    "ora": "^5.4.1",
+    "react": "^17.0.2"
+  },
+  
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/gradient-string": "^1.1.6",
+    "@types/inquirer": "^8.2.10",
+    "@types/node": "^20.14.10",
+    "@types/react": "^17.0.80",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.3"
+  }
+  
+}
