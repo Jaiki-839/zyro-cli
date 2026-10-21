@@ -70,8 +70,9 @@ async function main(): Promise<void> {
 
   const program = new Command();
   program
-    .name('jaiki')
-    .description('Jaiki CLI — A modern, AI-powered developer terminal.')
+    .name('zyro')
+    .alias('jaiki')
+    .description('Zyro CLI — A modern, AI-powered developer terminal.')
     .version(CLI_VERSION, '-v, --version')
     .option('--no-banner', 'Suppress startup banner and animation')
     .option('-q, --quiet', 'Quiet mode (suppress welcome banner)')

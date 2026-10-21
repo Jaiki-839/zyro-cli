@@ -1,4 +1,6 @@
 import os from 'os';
+import path from 'path';
+import fs from 'fs-extra';
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import { CommandDefinition, CommandCategory } from '../types';
@@ -204,6 +206,69 @@ const reloadCommand: CommandDefinition = {
   },
 };
 
+const shortcutCommand: CommandDefinition = {
+  name: 'shortcut',
+  description: 'Create or remove a custom terminal launch command (e.g. shortcut add myterm)',
+  usage: 'shortcut [add <name> | remove <name>]',
+  category: 'core',
+  handler: async (ctx) => {
+    const [action, name] = ctx.args;
+    const isWindows = process.platform === 'win32';
+
+    const binDir = isWindows
+      ? (process.env.APPDATA ? path.join(process.env.APPDATA, 'npm') : null)
+      : '/usr/local/bin';
+
+    if (!binDir || !(await fs.pathExists(binDir))) {
+      logger.error('Could not detect global npm bin directory.');
+      return;
+    }
+
+    if (action === 'add' && name) {
+      const cleanName = name.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      if (!cleanName) {
+        logger.error('Invalid shortcut name. Use alphanumeric characters.');
+        return;
+      }
+
+      try {
+        if (isWindows) {
+          const cmdFile = path.join(binDir, `${cleanName}.cmd`);
+          const ps1File = path.join(binDir, `${cleanName}.ps1`);
+          await fs.writeFile(cmdFile, `@ECHO off\r\nzyro %*\r\n`);
+          await fs.writeFile(ps1File, `& zyro @args\r\n`);
+        } else {
+          const shFile = path.join(binDir, cleanName);
+          await fs.writeFile(shFile, `#!/usr/bin/env sh\nzyro "$@"\n`, { mode: 0o755 });
+        }
+        logger.success(`Custom launch command "${cleanName}" created!`);
+        logger.info(`You can now launch Zyro CLI anytime by simply typing "${cleanName}" in any terminal.`);
+      } catch (err: any) {
+        logger.error(`Failed to create shortcut: ${err.message}`);
+      }
+      return;
+    }
+
+    if (action === 'remove' && name) {
+      const cleanName = name.trim().toLowerCase();
+      try {
+        if (isWindows) {
+          await fs.remove(path.join(binDir, `${cleanName}.cmd`));
+          await fs.remove(path.join(binDir, `${cleanName}.ps1`));
+        } else {
+          await fs.remove(path.join(binDir, cleanName));
+        }
+        logger.success(`Shortcut "${cleanName}" removed.`);
+      } catch (err: any) {
+        logger.error(`Failed to remove shortcut: ${err.message}`);
+      }
+      return;
+    }
+
+    logger.error('Usage: shortcut add <name>  |  shortcut remove <name>');
+  },
+};
+
 export const coreCommands: CommandDefinition[] = [
   helpCommand,
   clearCommand,
@@ -217,4 +282,5 @@ export const coreCommands: CommandDefinition[] = [
   terminalCommand,
   restartCommand,
   reloadCommand,
+  shortcutCommand,
 ];

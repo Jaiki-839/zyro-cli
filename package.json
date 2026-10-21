@@ -1,10 +1,11 @@
 {
-  "name": "jaiki-cli",
+  "name": "zyro-cli",
   "version": "1.0.0",
-  "description": "Jaiki CLI — A modern, AI-powered developer terminal inspired by Gemini CLI, GitHub CLI and Warp.",
+  "description": "Zyro CLI — A modern, AI-powered developer terminal inspired by Gemini CLI, Warp and GitHub CLI.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
+    "zyro": "dist/index.js",
     "jaiki": "dist/index.js"
   },
   "type": "commonjs",

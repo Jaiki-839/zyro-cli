@@ -8,14 +8,15 @@ import { CLI_VERSION } from '../utils/version';
 
 /** Large ASCII-art wordmark shown at startup. */
 export const DEFAULT_LOGO = String.raw`
-     ██╗ █████╗ ██╗██╗  ██╗██╗
-     ██║██╔══██╗██║██║ ██╔╝██║
-     ██║███████║██║█████╔╝ ██║
-██   ██║██╔══██║██║██╔═██╗ ██║
-╚█████╔╝██║  ██║██║██║  ██╗██║
- ╚════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝
+  ███████╗██╗   ██╗██████╗  ██████╗ 
+  ╚══███╔╝╚██╗ ██╔╝██╔══██╗██╔═══██╗
+    ███╔╝  ╚████╔╝ ██████╔╝██║   ██║
+   ███╔╝    ╚██╔╝  ██╔══██╗██║   ██║
+  ███████╗   ██║   ██║  ██║╚██████╔╝
+  ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ 
 `;
 
+export const ZYRO_LOGO = DEFAULT_LOGO;
 export const JAIKI_LOGO = DEFAULT_LOGO;
 
 export function getLogoText(customAscii?: string): string {
@@ -32,8 +33,8 @@ export function renderLogo(customAscii?: string): string {
 
 export function renderWelcomeBox(): string {
   const theme = getActiveTheme();
-  const title = chalk.hex(theme.accent).bold('🪶 JAIKI CLI');
-  const subtitle = chalk.hex(theme.secondary)('AI Developer Terminal');
+  const title = chalk.hex(theme.accent).bold('⚡ ZYRO CLI');
+  const subtitle = chalk.hex(theme.secondary)('AI Developer Terminal & Shell');
 
   return boxen(`${title}\n${subtitle}`, {
     padding: 1,
